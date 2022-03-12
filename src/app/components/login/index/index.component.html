@@ -1,0 +1,41 @@
+<div class="login-card">
+  <form class="content" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+    <h1>Sign In</h1>
+    <mat-form-field class="content-input">
+      <mat-label>Email</mat-label>
+      <input
+        type="email"
+        formControlName="email"
+        matInput
+        placeholder="Enter your email"
+      />
+      <mat-error *ngIf="f['email'].errors && f['email'].errors['required']">
+        กรุณากรอกอีเมล
+      </mat-error>
+      <mat-error *ngIf="f['email'].errors && f['email'].errors['email']">
+        กรุณาตรวจสอบอีเมล
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="content-input">
+      <mat-label>Password</mat-label>
+      <input
+        type="password"
+        formControlName="password"
+        matInput
+        placeholder="Enter your password"
+      />
+      <mat-error
+        *ngIf="f['password'].errors && f['password'].errors['required']"
+      >
+        กรุณากรอกรหัสผ่าน
+      </mat-error>
+    </mat-form-field>
+    <button class="btn-submit mt-2" type="submit"><span></span>SIGN IN</button>
+  </form>
+  <div class="img">
+    <img
+      src="https://www.teahub.io/photos/full/184-1846328_running-athlete-wallpaper-iphone.jpg"
+      alt=""
+    />
+  </div>
+</div>

@@ -1,0 +1,380 @@
+<div class="container p-0 mx-auto row">
+  <div class="col-md-4 position-relative">
+    <img class="banner" src="https://race.thai.run/register-bg.png" alt="" />
+    <div class="centered">
+      <span>Sports Republic Thailand</span>
+      <h2>THE LEGENDARY TRAIL SERIES 2022 WANGCHAN50</h2>
+    </div>
+  </div>
+  <form
+    class="col-md-8 content"
+    [formGroup]="checkoutForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="mt-4 header">
+      <h1>ข้อมูลผู้สมัคร</h1>
+      <button
+        class="btn btn-outline-primary"
+        type="button"
+        (click)="clearForm(checkoutForm)"
+      >
+        เคลียร์ข้อมูล
+      </button>
+    </div>
+    <h3>ข้อมูลส่วนตัวผู้สมัคร</h3>
+    <div class="img-preview">
+      <img [src]="selectedImage" alt="" />
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        (click)="fileInput.click()"
+      >
+        <span>เลือกรูปภาพ</span>
+        <input
+          #fileInput
+          (change)="onChangeImage($event)"
+          type="file"
+          accept="image/*"
+          style="display: none"
+        />
+      </button>
+    </div>
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label class="form-label">ชื่อ</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="first_name"
+          placeholder="กรอกชื่อ"
+          [ngClass]="{ 'is-invalid': submitted && f['first_name'].errors }"
+        />
+        <div
+          *ngIf="submitted && f['first_name'].errors"
+          class="invalid-feedback"
+        >
+          <p *ngIf="f['first_name'].errors['required']">กรุณากรอกชื่อ</p>
+          <p *ngIf="f['first_name'].errors['pattern']">
+            กรอกได้เฉพาะตัวอักษรเท่านั้น
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 form-group">
+        <label class="form-label">นามสกุล</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="last_name"
+          placeholder="นามสกุล"
+          [ngClass]="{ 'is-invalid': submitted && f['last_name'].errors }"
+        />
+        <div
+          *ngIf="submitted && f['last_name'].errors"
+          class="invalid-feedback"
+        >
+          <p *ngIf="f['last_name'].errors['required']">กรุณากรอกนามสกุล</p>
+          <p *ngIf="f['last_name'].errors['pattern']">
+            กรอกได้เฉพาะตัวอักษรเท่านั้น
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 row">
+      <div class="col-md-6 form-group">
+        <label class="form-label">เลือกเพศ</label>
+        <select
+          class="form-select"
+          formControlName="gender_id"
+          [ngClass]="{ 'is-invalid': submitted && f['gender_id'].errors }"
+        >
+          <option selected disabled [value]="null">กรุณาเลือกเพศ</option>
+          <option *ngFor="let g of genders | async" [value]="g.id">
+            {{ g.name }}
+          </option>
+        </select>
+        <div
+          *ngIf="submitted && f['gender_id'].errors"
+          class="invalid-feedback"
+        >
+          <p *ngIf="f['gender_id'].errors['required']">กรุณาเลือกเพศ</p>
+        </div>
+      </div>
+      <div class="col-md-6 d-flex flex-column">
+        <label class="form-label">วัน/เดือน/ปีเกิด</label>
+        <mat-form-field class="date-border" appearance="outline">
+          <input
+            autocomplete="off"
+            matInput
+            readonly
+            placeholder="กรุณาเลือก วัน/เดือน/ปีเกิด"
+            [min]="minDate"
+            [max]="maxDate"
+            [matDatepicker]="picker"
+            formControlName="birthday"
+            style="width: 100%; height: 100%"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error
+            *ngIf="
+              submitted &&
+              f['birthday'].errors &&
+              f['birthday'].errors['required']
+            "
+          >
+            กรุณาเลือกวัน/เดือน/ปีเกิด
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="mt-4 row">
+      <div class="col-md-6 form-group">
+        <label class="form-label">อีเมล</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="กรอกอีเมล"
+          formControlName="email"
+          [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+        />
+        <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+          <p *ngIf="f['email'].errors['required']">กรุณากรอกอีเมล</p>
+          <p *ngIf="f['email'].errors['email']">กรุณาตรวจสอบอีเมล</p>
+        </div>
+      </div>
+      <div class="col-md-6 form-group">
+        <label class="form-label">โทรศัพท์</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="กรอกโทรศัพท์"
+          formControlName="phone"
+          [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }"
+        />
+        <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">
+          <p *ngIf="f['phone'].errors['required']">กรุณากรอกหมายเลขโทรศัพท์</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center mt-4 gap-3">
+      <h3 class="m-0">ข้อมูลที่อยู่ผู้สมัคร</h3>
+      <i class="fas fa-plus-circle ms-1" (click)="addAddress()"></i>
+    </div>
+    <div
+      formArrayName="addresses"
+      *ngFor="let addressForm of address.controls; let i = index"
+    >
+      <div class="mt-4 row" [formGroup]="addressForm">
+        <div class="col-md-6 form-group">
+          <div class="d-flex align-items-center mb-2 gap-1">
+            <label class="form-label m-0">ที่อยู่</label>
+            <i
+              *ngIf="i !== 0"
+              class="fas fa-trash-alt"
+              (click)="deleteAddress(i)"
+            ></i>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="กรอกบ้านเลขที่ - หมู่บ้าน"
+            formControlName="house_no"
+            [ngClass]="{
+              'is-invalid':
+                submitted && address.controls[i].get('house_no').errors
+            }"
+          />
+          <div
+            *ngIf="
+              submitted && address.controls[i].get('house_no').errors?.required
+            "
+            class="invalid-feedback"
+          >
+            <p>กรุณากรอกที่อยู่ - หมู่บ้าน</p>
+          </div>
+        </div>
+        <div class="col-md-6 form-group" [formGroup]="addressForm">
+          <label class="form-label">จังหวัด</label>
+          <select
+            class="form-select"
+            formControlName="province_id"
+            (change)="getAmphoe($event, i)"
+            [ngClass]="{
+              'is-invalid':
+                submitted && address.controls[i].get('province_id').errors
+            }"
+          >
+            <option selected disabled [value]="null">กรุณาเลือกจังหวัด</option>
+            <option *ngFor="let p of provinces | async" [value]="p.id">
+              {{ p.name_th }}
+            </option>
+          </select>
+          <div
+            *ngIf="submitted && address.controls[i].get('province_id').errors"
+            class="invalid-feedback"
+          >
+            <p>กรุณาเลือกจังหวัด</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 row" [formGroup]="addressForm">
+        <div class="col-md-6 form-group">
+          <label class="form-label">อำเภอ</label>
+          <select
+            class="form-select"
+            formControlName="district_id"
+            (change)="getTambon($event, i)"
+            [ngClass]="{
+              'is-invalid':
+                submitted && address.controls[i].get('district_id').errors
+            }"
+          >
+            <option selected disabled [value]="null">กรุณาเลือกอำเภอ</option>
+            <option *ngFor="let a of amphoes[i]" [value]="a.id">
+              {{ a.name_th }}
+            </option>
+          </select>
+          <div
+            *ngIf="submitted && address.controls[i].get('district_id').errors"
+            class="invalid-feedback"
+          >
+            <p *ngIf="address.controls[i].get('district_id').errors">
+              กรุณาเลือกอำเภอ
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <label class="form-label">ตำบล</label>
+          <select
+            class="form-select"
+            formControlName="sub_district_id"
+            [ngClass]="{
+              'is-invalid':
+                submitted && address.controls[i].get('sub_district_id').errors
+            }"
+          >
+            <option selected disabled [value]="null">กรุณาเลือกตำบล</option>
+            <option *ngFor="let t of tambons[i]" [value]="t.id">
+              {{ t.name_th }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              submitted && address.controls[i].get('sub_district_id').errors
+            "
+            class="invalid-feedback"
+          >
+            <p
+              *ngIf="
+                address.controls[i].get('sub_district_id').errors['required']
+              "
+            >
+              กรุณาเลือกตำบล
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 row" [formGroup]="addressForm">
+        <div class="col-md-6 form-group">
+          <label class="form-label">รหัสไปรษณีย์</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="postcode"
+            placeholder="กรอกรหัสไปรษณีย์"
+            [ngClass]="{
+              'is-invalid':
+                submitted && address.controls[i].get('postcode').errors
+            }"
+          />
+          <div
+            *ngIf="submitted && address.controls[i].get('postcode').errors"
+            class="invalid-feedback"
+          >
+            <p *ngIf="address.controls[i].get('postcode').errors['required']">
+              กรุณากรอกรหัสไปรษณีย์
+            </p>
+            <p *ngIf="address.controls[i].get('postcode').errors['pattern']">
+              กรุณาตรวจสอบรหัสไปรษณีย์
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="mt-4">ประเภทการแข่งขันและไซส์เสื้อ</h3>
+    <div class="mt-4 row">
+      <div class="col-md-6 form-group">
+        <label class="form-label">ประเภทการแข่งขัน</label>
+        <select
+          class="form-select"
+          formControlName="race_id"
+          [ngClass]="{ 'is-invalid': submitted && f['race_id'].errors }"
+        >
+          <option selected disabled [value]="null">
+            เลือกประเภทการแข่งขัน
+          </option>
+          <option *ngFor="let r of races | async" [value]="r.id">
+            {{ r.price }}฿ {{ r.name }}
+          </option>
+        </select>
+        <div *ngIf="submitted && f['race_id'].errors" class="invalid-feedback">
+          <p *ngIf="f['race_id'].errors['required']">
+            กรุณาเลือกประเภทการแข่งขัน
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 form-group d-flex flex-column form-group"></div>
+    </div>
+
+    <span class="after-selected-race" *ngIf="!f['race_id'].errors">
+      <div class="row">
+        <div class="col-md-6">
+          <h3 class="mt-4">แบบเสื้อ</h3>
+          <img
+            src="https://storage.googleapis.com/s.race.thai.run/files/1b50f77f-3b00-4679-ac7c-564d4d99aa86.jpeg"
+            alt=""
+          />
+        </div>
+        <div class="col-md-6">
+          <h3 class="mt-4">ขนาดเสื้อ</h3>
+          <div class="select-wrap">
+            <div *ngFor="let r of sizes | async; let i = index">
+              <input
+                [id]="i"
+                [value]="r.id"
+                class="checkbox-budget"
+                type="radio"
+                name="shirt_size_id"
+                formControlName="shirt_size_id"
+              />
+              <label class="for-checkbox-budget" style="width: 100%" [for]="i">
+                <span>{{ r.size }} : รอบอก {{ r.chest }}”</span>
+              </label>
+            </div>
+          </div>
+          <p
+            class="text-danger mt-2"
+            *ngIf="
+              submitted &&
+              f['shirt_size_id'].errors &&
+              f['shirt_size_id'].errors['required']
+            "
+          >
+            กรุณาเลือกไซส์เสื้อ
+          </p>
+        </div>
+      </div>
+    </span>
+    <div class="mt-5 d-flex justify-content-between align-items-center">
+      <button class="btn btn-outline-danger" (click)="backClicked()">
+        ย้อนกลับ
+      </button>
+      <button class="btn-submit" type="submit">ลงทะเบียน</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,103 @@
+<div class="row" style="margin-top: 5%">
+  <div class="col-sm-10">
+    <div class="form-field">
+      <mat-form-field class="example-form" appearance="fill">
+        <mat-label>ค้นหาชื่อ</mat-label>
+        <input
+          matInput
+          id="insert"
+          type="text"
+          #input
+          (keyup)="search(input.value)"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="ลำดับ">
+      <th mat-header-cell *matHeaderCellDef>ลำดับ</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="ชื่อ">
+      <th mat-header-cell *matHeaderCellDef>ชื่อ</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.first_name }} {{ element.last_name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="เพศ">
+      <th mat-header-cell *matHeaderCellDef>เพศ</th>
+      <td mat-cell *matCellDef="let element">{{ element.gender }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="ประเภท">
+      <th mat-header-cell *matHeaderCellDef>ประเภท</th>
+      <td mat-cell *matCellDef="let element">{{ element.race }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="ค่าลงทะเบียน">
+      <th mat-header-cell *matHeaderCellDef>ค่าลงทะเบียน</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.price | number }} บาท
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ไซส์เสื้อ">
+      <th mat-header-cell *matHeaderCellDef>ไซส์เสื้อ</th>
+      <td mat-cell *matCellDef="let element">{{ element.shirt.shirt_size }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="E-mail">
+      <th mat-header-cell *matHeaderCellDef>E-mail</th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="ดูข้อมูลเพิ่มเติม">
+      <th mat-header-cell *matHeaderCellDef>ดูข้อมูลเพิ่มเติม</th>
+      <td mat-cell *matCellDef="let element">
+        <a [routerLink]="[element.id]">เพิ่มเติม</a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ลบผู้สมัคร">
+      <th mat-header-cell *matHeaderCellDef>ลบผู้สมัคร</th>
+      <td mat-cell *matCellDef="let element">
+        <div class="clo-sm-3 button-edit-delect">
+          <mat-icon
+            aria-hidden="false"
+            style="color: red; cursor: pointer"
+            aria-label="Example delete icon"
+            (click)="delectClient(element.id)"
+            >delete</mat-icon
+          >
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+  >
+  </mat-paginator>
+</div>
+
+<!-- 
+<mat-form-field>
+  <input #minmaxInput matInput 
+    [min]="minDate" 
+    [max]="maxDate"
+    [matDatepicker]="minmaxvalidation" 
+    placeholder="Pick a date">
+  <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
+     </mat-datepicker-toggle>
+  <mat-datepicker #minmaxvalidation></mat-datepicker>
+</mat-form-field> -->

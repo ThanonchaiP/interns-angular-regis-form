@@ -1,0 +1,36 @@
+nav {
+  // background-color: #000;
+  // color: #fff;
+  padding: 10px 0;
+  box-shadow: 0 2px 10px 0 rgb(0 0 0 / 8%);
+  .logo {
+    color: dodgerblue;
+  }
+  a {
+    text-decoration: none;
+    // color: #000;
+    font-weight: 900;
+  }
+}
+
+.nav-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .menu {
+    display: flex;
+    list-style: none;
+    gap: 1rem;
+
+    li a {
+      color: #000;
+      font-size: 1rem;
+    }
+  }
+}
+
+.link-active {
+  color: dodgerblue !important;
+  transition: all 0.3s;
+}
